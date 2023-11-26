@@ -12,16 +12,28 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    counter: 0,
-                    event: "submit"
+                    text: "Puerta Cerrada",
+                    open: false
                 };
             },
-            methods: {
-                submit() {
-                    this.counter++;
+            watch: {
+                open(value) {
+                    this.text = value ? "Puerta Abierta" : this.text;
                 }
             },
-            template: `<form v-on:[event].prevent.stop="submit"><button>{{ counter }}<button/></form>`
+            computed: {
+                label() {
+                    return this.open ? "Cerrar" : "Abrir"
+                }
+            },
+            template: `
+                <div>{{ text }}</div>
+                <button 
+                    @click="open = !open"
+                >
+                    {{ label }}
+                </button>
+            `
         }).mount("#app");
     </script>
 </body>
