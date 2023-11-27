@@ -9,20 +9,29 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <div id="app"></div>
     <script>
-        const vm = Vue.createApp({
+        const app = Vue.createApp({
             data() {
                 return {
-                    counter: 0,
-                    event: "submit"
+                    items: ["uno", "dos", "tres"]
                 };
             },
-            methods: {
-                submit() {
-                    this.counter++;
+            template: `
+                <ul>
+                    <v-item v-for="item in items" v-bind:text="item"></v-item>
+                </ul>
+            `
+        })
+
+        app.component("v-item", {
+            props: {
+                text: {
+                    default: "Texto vacio"
                 }
             },
-            template: `<form v-on:[event].prevent.stop="submit"><button>{{ counter }}<button/></form>`
-        }).mount("#app");
+            template: `<li>{{ text }}</li>`
+        });
+
+        const vm = app.mount("#app");
     </script>
 </body>
 </html>
